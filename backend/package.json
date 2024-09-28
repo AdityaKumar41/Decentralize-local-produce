@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ethers": "5.7.2",
+    "express": "^4.21.0",
+    "graphql": "^16.9.0"
+  }
+}

@@ -2,38 +2,21 @@ import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import DefaultLayout from "@/layouts/default";
 import { Link } from "react-router-dom";
+import { useAllProduct } from "@/hooks/product";
+import UnsplashImage from "@/components/ImageRender";
+import { ethers } from "ethers";
+import { Skeleton } from "@nextui-org/skeleton";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  seller: string;
+}
 
 export default function DecentralizedMarketplace() {
-  const data = [
-    {
-      id: 1,
-      title: "Product 1",
-      price: 19.99,
-      discription: "Fresh from local producers",
-      image: "/image1.jpg",
-    },
-    {
-      id: 2,
-      title: "Product 2",
-      price: 19.99,
-      discription: "Fresh from local producers",
-      image: "/image2.jpg",
-    },
-    {
-      id: 3,
-      title: "Product 3",
-      price: 19.99,
-      discription: "Fresh from local producers",
-      image: "/image3.jpg",
-    },
-    {
-      id: 4,
-      title: "Product 4",
-      price: 19.99,
-      discription: "Fresh from local producers",
-      image: "/image4.jpg",
-    },
-  ];
+  const { product, isLoading } = useAllProduct();
+
   return (
     <DefaultLayout>
       <div className="flex flex-col min-h-screen">
@@ -64,29 +47,99 @@ export default function DecentralizedMarketplace() {
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8">
                 Featured Products
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {data.map((i) => (
-                  <Card key={i.id}>
-                    <CardHeader>
-                      <img
-                        src={i.image}
-                        alt={`Product ${i}`}
-                        className="w-full h-48 object-cover"
-                      />
-                    </CardHeader>
-                    <CardBody>
-                      {/* <CardTitle>Local Product {i}</CardTitle> */}
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {i.discription}
-                      </p>
-                    </CardBody>
-                    <CardFooter className="flex justify-between">
-                      <span className="font-bold">${i.price}</span>
-                      <Button size="sm">Add to Cart</Button>
-                    </CardFooter>
+              {!isLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {product?.getAllProducts?.slice(0, 4).map((i: Product) => (
+                    <Card key={i.id}>
+                      <CardHeader>
+                        <UnsplashImage productName={i.name} altText={i.name} />
+                      </CardHeader>
+                      <CardBody>
+                        {/* <CardTitle>Local Product {i}</CardTitle> */}
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {i.seller}
+                        </p>
+                      </CardBody>
+                      <CardFooter className="flex justify-between items-stretch flex-col">
+                        <span className="font-bold">
+                          {ethers.utils.formatEther(i.price)} AVAX
+                        </span>
+                        <Link to={"/product"}>
+                          {" "}
+                          <Button size="sm">Add to Cart</Button>
+                        </Link>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <Card className="w-[250px] space-y-5 p-4" radius="lg">
+                    <Skeleton className="rounded-lg">
+                      <div className="h-24 rounded-lg bg-default-300"></div>
+                    </Skeleton>
+                    <div className="space-y-3">
+                      <Skeleton className="w-3/5 rounded-lg">
+                        <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+                      </Skeleton>
+                      <Skeleton className="w-4/5 rounded-lg">
+                        <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+                      </Skeleton>
+                      <Skeleton className="w-2/5 rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                      </Skeleton>
+                    </div>
                   </Card>
-                ))}
-              </div>
+                  <Card className="w-[250px] space-y-5 p-4" radius="lg">
+                    <Skeleton className="rounded-lg">
+                      <div className="h-24 rounded-lg bg-default-300"></div>
+                    </Skeleton>
+                    <div className="space-y-3">
+                      <Skeleton className="w-3/5 rounded-lg">
+                        <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+                      </Skeleton>
+                      <Skeleton className="w-4/5 rounded-lg">
+                        <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+                      </Skeleton>
+                      <Skeleton className="w-2/5 rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                      </Skeleton>
+                    </div>
+                  </Card>
+                  <Card className="w-[250px] space-y-5 p-4" radius="lg">
+                    <Skeleton className="rounded-lg">
+                      <div className="h-24 rounded-lg bg-default-300"></div>
+                    </Skeleton>
+                    <div className="space-y-3">
+                      <Skeleton className="w-3/5 rounded-lg">
+                        <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+                      </Skeleton>
+                      <Skeleton className="w-4/5 rounded-lg">
+                        <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+                      </Skeleton>
+                      <Skeleton className="w-2/5 rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                      </Skeleton>
+                    </div>
+                  </Card>
+                  <Card className="w-[250px] space-y-5 p-4" radius="lg">
+                    <Skeleton className="rounded-lg">
+                      <div className="h-24 rounded-lg bg-default-300"></div>
+                    </Skeleton>
+                    <div className="space-y-3">
+                      <Skeleton className="w-3/5 rounded-lg">
+                        <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+                      </Skeleton>
+                      <Skeleton className="w-4/5 rounded-lg">
+                        <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+                      </Skeleton>
+                      <Skeleton className="w-2/5 rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                      </Skeleton>
+                    </div>
+                  </Card>
+                </div>
+              )}
             </div>
           </section>
         </main>
